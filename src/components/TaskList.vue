@@ -52,7 +52,7 @@
         })
       }}</span>
     </p>
-    <!--show circular progress bar filled with level progress--><ve-progress
+    <!--show the circular progress bar filled with level progress--><ve-progress
       :progress="getCurrentProgress"
       >Level
       <span id="text-numeric-display">{{
@@ -104,7 +104,7 @@
             >s</span
           ></span
         >
-        <!--don't show complete button if one-time task is completed--><button
+        <!--don't show the complete button if one-time task is completed--><button
           v-if="!task.isCompleted"
           @click="completeTask(task.newId)"
         >
@@ -201,15 +201,15 @@ export default defineComponent({
   },
   methods: {
     /**
-     * Complete task based on task ID.
-     * @param id task ID
+     * Complete the task based on task ID.
+     * @param id the task ID
      */
     completeTask: function (id: number): void {
       store.dispatch("completeTask", id);
     },
     /**
-     * Delete task based on task ID.
-     * @param id task ID
+     * Delete the task based on task ID.
+     * @param id the task ID
      */
     deleteTask: function (id: number): void {
       store.dispatch("deleteTask", id);

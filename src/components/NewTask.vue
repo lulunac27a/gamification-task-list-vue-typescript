@@ -11,7 +11,7 @@
       v-model="task"
       required
     /><br />
-    Due date:<br /><!--task due date must be on or after today date-->
+    Due date:<br /><!--task due date must be on or after today's date-->
     <input
       class="task-input"
       id="due-date"
@@ -87,7 +87,7 @@ const currentLocalDate: Date = new Date(
 ); //current date in local time zone
 
 export default defineComponent({
-  //define component to default values when the task is created
+  //define the component to default values when the task is created
   data() {
     return {
       task: "",
@@ -114,11 +114,11 @@ export default defineComponent({
   },
   methods: {
     /**
-     * Add task to task list when user presses the Add Task button.
+     * Add task to the task list when user presses the Add Task button.
      */
     addTask: function (): void | TodoTask[] {
-      this.dueDate = this.originalDueDate; //set task due date to entered task original due date
-      store.dispatch("createTask", this);
+      this.dueDate = this.originalDueDate; //set the task due date to entered task original due date
+      store.dispatch("createTask", this); //create the task to the user store
       this.newId++;
       this.task = "";
       this.dueDate = currentLocalDate.toISOString().split("T")[0];
