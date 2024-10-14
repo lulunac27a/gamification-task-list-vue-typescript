@@ -868,7 +868,7 @@ export default createStore({
        */
       context.commit("create_Task", payload);
     },
-    completeTask: (context, payload): voi => {
+    completeTask: (context, payload): void => {
       /**
        * Action to complete the task.
        */
