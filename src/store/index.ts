@@ -32,6 +32,7 @@ export default createStore({
       rating: 0 as number, //set the rating to 0 when state is created
       bestScoreEarned: 0 as number, //the highest number of points earned achieved when the task is completed
       dailyStreak: 0 as number, //set the daily streak to 0 and last completion date to undefined when state is created
+      daysCompleted: 0 as number, //set the number of days completed to 0 when state is created
       tasksCompletedToday: 0 as number, //set the number of tasks completed in a day (today) to 0
       totalTasksCompleted: 0 as number, //set the total number of tasks completed to 0
       lastCompletionDate: undefined as string | undefined, //user task last completion date in YYYY-MM-DD string
@@ -48,6 +49,7 @@ export default createStore({
     getScore: (state) => state.user.score, //get the user score
     getRating: (state) => state.user.rating, //get the user rating
     getDailyStreak: (state) => state.user.dailyStreak, //get the user daily streak
+    getDaysCompleted: (state) => state.user.daysCompleted, //get the number of days completed
     getTasksCompletedToday: (state) => state.user.tasksCompletedToday, //get the user tasks completed in a day
     getTotalTasksCompleted: (state) => state.user.totalTasksCompleted, //get the user total tasks completed
     getLastCompletionDate: (state) => state.user.lastCompletionDate, //get the user last completion date
@@ -86,9 +88,10 @@ export default createStore({
       let repeatMultiplier: number; //calculate the task repetition XP and score multiplier based on task repetition occurrence and task repetition interval
       let dailyStreakMultiplier: number; //calculate the daily streak XP and score multiplier based on daily streak
       let levelMultiplier: number; //calculate the level score multiplier based on user level
-      let dayTasksMultiplier: number; //calculate the XP and score multiplier for tasks completed in a day (today)
-      let tasksMultiplier: number; //calculate the score multiplier for total number of tasks completed
+      let dayTasksMultiplier: number; //calculate the XP and score multiplier based on tasks completed in a day (today)
+      let tasksMultiplier: number; //calculate the score multiplier based on total number of tasks completed
       let rankMultiplier: number; //calculate the rank multiplier based on current user rating score
+      let daysCompletedMultiplier: number; //calculate the XP and score multiplier based on number of days completed
       const activeTasks: number = state.tasks.filter(
         (taskList) => !taskList.isCompleted,
       ).length; //calculate the number of active tasks (tasks that are not completed) using Array.filter
@@ -178,6 +181,7 @@ export default createStore({
       ) {
         //if the new day has passed
         state.user.tasksCompletedToday = 1; //reset the number of tasks completed in a day to 1
+        state.user.daysCompleted++; //increase number of days completed
       } else {
         state.user.tasksCompletedToday++; //increase the number of tasks completed in a day by 1
       }
@@ -577,6 +581,43 @@ export default createStore({
       } else {
         rankMultiplier = 71; //71 rank multiplier for rating from 1,000,000,000
       }
+      //calculate the multiplier based on number of days completed
+      if (state.user.daysCompleted === 0 || state.user.daysCompleted === 1) {
+        daysCompletedMultiplier = 1; //1x days completed multiplier for 0 or 1 days completed
+      } else if (state.user.daysCompleted < 3) {
+        daysCompletedMultiplier = 1 + 0.1 * (state.user.daysCompleted - 1); //1x days completed multiplier from 1 day completed plus 0.1x for each day completed
+      } else if (state.user.daysCompleted < 7) {
+        daysCompletedMultiplier = 1.2 + 0.05 * (state.user.daysCompleted - 3); //1.2x days completed multiplier from 3 days completed plus 0.05x for each day completed
+      } else if (state.user.daysCompleted < 14) {
+        daysCompletedMultiplier = 1.4 + 0.03 * (state.user.daysCompleted - 7); //1.4x days completed multiplier from 7 days completed (1 week) plus 0.03x for each day completed
+      } else if (state.user.daysCompleted < 30) {
+        daysCompletedMultiplier = 1.61 + 0.02 * (state.user.daysCompleted - 14); //1.61x days completed multiplier from 14 days completed (2 weeks) plus 0.02x for each day completed
+      } else if (state.user.daysCompleted < 60) {
+        daysCompletedMultiplier = 1.93 + 0.01 * (state.user.daysCompleted - 30); //1.93x days completed multiplier from 30 days completed (approximately 1 month) plus 0.01x for each day completed
+      } else if (state.user.daysCompleted < 90) {
+        daysCompletedMultiplier =
+          2.23 + 0.005 * (state.user.daysCompleted - 60); //2.23x days completed multiplier from 60 days completed (approximately 2 months) plus 0.005x for each day completed
+      } else if (state.user.daysCompleted < 180) {
+        daysCompletedMultiplier =
+          2.38 + 0.004 * (state.user.daysCompleted - 90); //2.38x days completed multiplier from 90 days completed (approximately 3 months) plus 0.004x for each day completed
+      } else if (state.user.daysCompleted < 365) {
+        daysCompletedMultiplier =
+          2.74 + 0.0025 * (state.user.daysCompleted - 180); //2.74x days completed multiplier from 180 days completed (approximately 6 months) plus 0.0025x for each day completed
+      } else if (state.user.daysCompleted < 730) {
+        daysCompletedMultiplier =
+          3.2025 + 0.002 * (state.user.daysCompleted - 365); //3.2025x days completed multiplier from 365 days completed (approximately 1 year) plus 0.002x for each day completed
+      } else if (state.user.daysCompleted < 1461) {
+        daysCompletedMultiplier =
+          3.9325 + 0.001 * (state.user.daysCompleted - 730); //3.9325x days completed multiplier from 730 days completed (approximately 2 years) plus 0.001x for each day completed
+      } else if (state.user.daysCompleted < 3652) {
+        daysCompletedMultiplier =
+          4.6625 + 0.0005 * (state.user.daysCompleted - 1461); //4.6625x days completed multiplier from 1,461 days completed (approximately 4 years) plus 0.0005x for each day completed
+      } else if (state.user.daysCompleted < 7305) {
+        daysCompletedMultiplier =
+          5.758 + 0.0002 * (state.user.daysCompleted - 3652); //5.758x days completed multiplier from 3,652 days completed (approximately 10 years) plus 0.0002x for each day completed
+      } else {
+        daysCompletedMultiplier = 6.4886; //6.4886x days completed multiplier from 7,305 days completed
+      }
       //calculate the amount of XP earned and points earned when the task is completed
       const rankXpEarned: number = Math.max(
         Math.floor(
@@ -610,7 +651,8 @@ export default createStore({
             dailyStreakMultiplier *
             dayTasksMultiplier *
             (1 + task.rank / 10) *
-            (1 + rankMultiplier / 10),
+            (1 + rankMultiplier / 10) *
+            daysCompletedMultiplier,
         ),
         1,
       ); //get at least 1 XP when the task is completed
@@ -636,11 +678,12 @@ export default createStore({
             tasksMultiplier *
             activeTasksMultiplier *
             (1 + task.rank / 10) *
-            (1 + rankMultiplier / 10),
+            (1 + rankMultiplier / 10) *
+            daysCompletedMultiplier,
         ),
         1,
       ); //get at least 1 point when the task is completed
-      state.user.score += pointsEarned; //get the amount of points earned based on task difficulty, task priority, task due date, task repetition, task streak, daily streak, user level and rank multipliers
+      state.user.score += pointsEarned; //get the amount of points earned based on task difficulty, task priority, task due date, task repetition, task streak, daily streak, user level, rank and days completed multipliers
       if (pointsEarned > state.user.bestScoreEarned) {
         //if the points earned are greater than the best score earned
         state.user.bestScoreEarned = pointsEarned; //set the best score earned to points earned when the task is completed

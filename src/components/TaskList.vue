@@ -38,6 +38,12 @@
       }}</span>
     </p>
     <p>
+      Days Completed:
+      <span id="text-numeric-display">{{
+        getDaysCompleted.toLocaleString("en-US")
+      }}</span>
+    </p>
+    <p>
       Best Points Earned After Completing the Task:
       <span id="text-numeric-display">{{
         getCurrentBestScoreEarned.toLocaleString("en-US")
@@ -185,6 +191,9 @@ export default defineComponent({
     },
     getCurrentDailyStreak() {
       return store.getters.getDailyStreak; //get current daily streak
+    },
+    getDaysCompleted() {
+      return store.getters.getDaysCompleted; //get number of days completed
     },
     getCurrentTasksCompletedToday() {
       return store.getters.getTasksCompletedToday; //get tasks completed in a day (today)
