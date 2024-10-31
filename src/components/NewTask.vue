@@ -114,7 +114,7 @@ export default defineComponent({
   },
   methods: {
     /**
-     * Add task to the task list when user presses the Add Task button.
+     * Add the task to the task list when the user presses the Add Task button.
      */
     addTask: function (): void | TodoTask[] {
       this.dueDate = this.originalDueDate; //set the task due date to entered task original due date

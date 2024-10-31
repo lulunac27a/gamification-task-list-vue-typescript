@@ -89,9 +89,9 @@ export default createStore({
       let dailyStreakMultiplier: number; //calculate the daily streak XP and score multiplier based on daily streak
       let levelMultiplier: number; //calculate the level score multiplier based on user level
       let dayTasksMultiplier: number; //calculate the XP and score multiplier based on tasks completed in a day (today)
-      let tasksMultiplier: number; //calculate the score multiplier based on total number of tasks completed
+      let tasksMultiplier: number; //calculate the score multiplier based on the total number of tasks completed
       let rankMultiplier: number; //calculate the rank multiplier based on current user rating score
-      let daysCompletedMultiplier: number; //calculate the XP and score multiplier based on number of days completed
+      let daysCompletedMultiplier: number; //calculate the XP and score multiplier based on the number of days completed
       const activeTasks: number = state.tasks.filter(
         (taskList) => !taskList.isCompleted,
       ).length; //calculate the number of active tasks (tasks that are not completed) using Array.filter
@@ -581,7 +581,7 @@ export default createStore({
       } else {
         rankMultiplier = 71; //71 rank multiplier for rating from 1,000,000,000
       }
-      //calculate the multiplier based on number of days completed
+      //calculate the multiplier based on the number of days completed
       if (state.user.daysCompleted === 0 || state.user.daysCompleted === 1) {
         daysCompletedMultiplier = 1; //1x days completed multiplier for 0 or 1 days completed
       } else if (state.user.daysCompleted < 3) {
@@ -696,7 +696,7 @@ export default createStore({
       state.user.level = Math.max(
         1,
         Math.floor(Math.cbrt(state.user.xp + 0.5)),
-      ); //calculate the level based on how many XP and set level to 1 if total XP is 0
+      ); //calculate the level based on how many XP and set level to 1 if the total XP is 0
       if (state.user.level > userLevel) {
         alert(
           `Level Up!\nYou are now level ${state.user.level.toLocaleString("en-US")}!`,
@@ -887,7 +887,7 @@ export default createStore({
         ) as boolean; //ask user to confirm task deletion
       }
       if (deleteTask || state.tasks[index].isCompleted) {
-        //delete the task if one-time task is completed when the deleted button is clicked or when user confirms deletion alert
+        //delete the task if one-time task is completed when the deleted button is clicked or when the user confirms deletion alert
         state.tasks.splice(index, 1); //delete the task item
       }
     },
