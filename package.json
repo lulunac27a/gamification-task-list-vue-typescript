@@ -30,7 +30,7 @@
     "lint-staged": "^15.2.9",
     "sass": "^1.32.7",
     "sass-loader": "^16.0.1",
-    "typescript": "~5.6.2"
+    "typescript": "~5.7.2"
   },
   "gitHooks": {
     "pre-commit": "lint-staged"
