@@ -106,7 +106,7 @@ export default createStore({
               .toISOString()
               .split("T")[0] + " 23:59:59.999",
           ) >= new Date(taskList.dueDate + " 23:59:59.999"),
-      ).length; //calculate the number of overdue tasks (tasks after the due date)
+      ).length; //calculate the number of overdue tasks (tasks after the due date) and the date of next midnight from now
       let activeTasksMultiplier: number; //calculate score multiplier for number of active tasks (tasks that are not completed)
       //calculate task repetition XP multiplier
       if (Number(task.repeatInterval) === 1) {
