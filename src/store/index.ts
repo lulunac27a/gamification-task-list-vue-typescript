@@ -71,7 +71,7 @@ export default createStore({
       let dateMultiplier: number; //calculate the date multiplier based on the number of days until the task is due
       if (daysToDue < 0) {
         //if the task is overdue, XP and score multiplier are less than 1 that decreases over time when the task is overdue
-        dateMultiplier = -2 / (daysToDue - 1);
+        dateMultiplier = -2 / Math.min(-1, daysToDue - 1);
       } else if (daysToDue === 0) {
         //if the task is due today, XP and score multiplier bonus increases more than 2 based on the time the task is completed
         dateMultiplier =
@@ -82,7 +82,7 @@ export default createStore({
               (1000 * 24 * 60 * 60));
       } else {
         //else, XP and score multiplier bonus increases (more than 1) when the task gets closer to due date
-        dateMultiplier = 1 + 1 / (daysToDue + 1);
+        dateMultiplier = 1 + 1 / Math.max(1, daysToDue + 1);
       }
       let streakMultiplier: number; //calculate the task streak XP and score multiplier based on task streak, if the task is completed before the due date, then the streak increases else if the task is completed overdue (after the due date) reset task streak to 0
       let repeatMultiplier: number; //calculate the task repetition XP and score multiplier based on task repetition occurrence and task repetition interval
