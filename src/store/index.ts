@@ -95,18 +95,6 @@ export default createStore({
       const activeTasks: number = state.tasks.filter(
         (taskList) => !taskList.isCompleted,
       ).length; //calculate the number of active tasks (tasks that are not completed) using Array.filter
-      const overdueTasks: number = state.tasks.filter(
-        (taskList) =>
-          new Date(
-            new Date(
-              new Date().setMinutes(
-                new Date().getMinutes() - new Date().getTimezoneOffset(),
-              ),
-            )
-              .toISOString()
-              .split("T")[0] + " 23:59:59.999",
-          ) >= new Date(taskList.dueDate + " 23:59:59.999"),
-      ).length; //calculate the number of overdue tasks (tasks after the due date) and the date of next midnight from now
       let activeTasksMultiplier: number; //calculate score multiplier for number of active tasks (tasks that are not completed)
       //calculate task repetition XP multiplier
       if (Number(task.repeatInterval) === 1) {
@@ -242,6 +230,24 @@ export default createStore({
       if (daysSinceLastCompletion >= 1) {
         //repeat for each day of inactivity
         for (let i = 0; i < daysSinceLastCompletion; i++) {
+          const overdueTasks: number = state.tasks.filter(
+            (taskList) =>
+              new Date(
+                new Date(
+                  new Date(String(state.user.lastCompletionDate)).setMinutes(
+                    new Date(
+                      String(state.user.lastCompletionDate),
+                    ).getMinutes() -
+                      new Date(
+                        String(state.user.lastCompletionDate),
+                      ).getTimezoneOffset(),
+                  ) +
+                    86400000 * i,
+                )
+                  .toISOString()
+                  .split("T")[0] + " 23:59:59.999",
+              ) >= new Date(taskList.dueDate + " 23:59:59.999"),
+          ).length; //calculate the number of overdue tasks (tasks after the due date) and the date of next midnight from now
           state.user.rating -= Math.max(
             Math.sqrt(Math.max(state.user.rating, 0)) *
               (1 + Math.log(Math.max(i + 1, 1))) *
