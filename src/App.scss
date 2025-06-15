@@ -1,9 +1,10 @@
 #app {
-  font-family: Avenir, Helvetica, Arial, system-ui, sans-serif; //set default font family to Avenir or system-ui or sans-serif font
-  font-variant-numeric: tabular-nums; //set numeric values to tabular numerals
-  -webkit-font-smoothing: antialiased; //set font smoothing to antialiased text in WebKit browsers
-  -moz-osx-font-smoothing: grayscale; //set font smoothing to grayscale in Firefox browsers
-  text-align: center; //center the text display content
-  color: #204060; //set text color to dark blue
-  margin-top: 50px; //set top margin to 50 pixels
+    font-family:
+        Avenir, Helvetica, Arial, system-ui, sans-serif; //set default font family to Avenir or system-ui or sans-serif font
+    font-variant-numeric: tabular-nums; //set numeric values to tabular numerals
+    -webkit-font-smoothing: antialiased; //set font smoothing to antialiased text in WebKit browsers
+    -moz-osx-font-smoothing: grayscale; //set font smoothing to grayscale in Firefox browsers
+    text-align: center; //center the text display content
+    color: #204060; //set text color to dark blue
+    margin-top: 50px; //set top margin to 50 pixels
 }

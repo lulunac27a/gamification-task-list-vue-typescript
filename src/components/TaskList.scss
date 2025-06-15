@@ -2,26 +2,26 @@
 
 $margin: 10px; //default margin value
 h3 {
-  margin: $margin 0 0; //no left, right and bottom margins for displaying task list header
+    margin: $margin 0 0; //no left, right and bottom margins for displaying task list header
 }
 
 ul {
-  list-style-type: none; //no bullets for unordered lists
-  padding: 0; //no padding for unordered lists
-  line-height: 150%; //more line spacing for easier to read text
+    list-style-type: none; //no bullets for unordered lists
+    padding: 0; //no padding for unordered lists
+    line-height: 150%; //more line spacing for easier to read text
 }
 
 li {
-  margin: #{math.div($margin, 2)} $margin; //add line spacing between tasks
+    margin: #{math.div($margin, 2)} $margin; //add line spacing between tasks
 }
 
 .overdue {
-  //overdue tasks
-  color: red; //set text color to red for overdue tasks
-  font-weight: bold; //bold text for overdue tasks
+    //overdue tasks
+    color: red; //set text color to red for overdue tasks
+    font-weight: bold; //bold text for overdue tasks
 }
 
 #text-numeric-display {
-  //text output and numeric values display
-  font-weight: bold; //bold text for output and numeric values
+    //text output and numeric values display
+    font-weight: bold; //bold text for output and numeric values
 }
