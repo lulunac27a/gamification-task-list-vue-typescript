@@ -58,7 +58,7 @@
                 })
             }}</span>
         </p>
-        <!--show the circular progress bar filled with level progress--><ve-progress
+        <!--show the circular progress bar filled with current level progress--><ve-progress
             :progress="getCurrentProgress"
             >Level
             <span id="text-numeric-display">{{
