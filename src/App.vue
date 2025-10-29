@@ -5,7 +5,7 @@
         <p>
             This is a task list application using Vue, TypeScript, and Vuex with
             SCSS styles. It supports gamification like levels and experience
-            points (XP).
+            points (XP). It uses Vuex to store user data to the storage.
         </p>
         <NewTask />
         <TaskList />
