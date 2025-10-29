@@ -136,25 +136,25 @@ import store from "@/store";
 import { defineComponent } from "vue";
 import { TodoTask } from "./NewTask.vue";
 
-export enum RepeatInterval {
+export enum RepeatInterval { //task repeat internal enum
     Daily = 1, //daily gets 1x XP, weekly gets 2x XP, monthly gets 3x XP, yearly gets 4x XP, one-time gets 5x XP multiplier
     Weekly = 2,
     Monthly = 3,
     Yearly = 4,
     Once = 5,
 }
-export enum Difficulty {
+export enum Difficulty { //task difficulty enum
     Easy = 1, //easy gets 1x XP, medium gets 2x XP, hard gets 3x XP multiplier
     Medium = 2,
     Hard = 3,
 }
-export enum Priority {
+export enum Priority { //task priority enum
     Low = 1, //low gets 1x XP, medium gets 2x XP, hard gets 3x XP multiplier
     Medium = 2,
     High = 3,
 }
 export default defineComponent({
-    name: "TaskList",
+    name: "TaskList", //task list component
     props: {
         newId: Number,
         tasks: Array,
@@ -223,14 +223,14 @@ export default defineComponent({
          * @param id the task ID
          */
         completeTask: function (id: number): void {
-            store.dispatch("completeTask", id);
+            store.dispatch("completeTask", id); //complete task based on task ID
         },
         /**
          * Delete the task based on task ID.
          * @param id the task ID
          */
         deleteTask: function (id: number): void {
-            store.dispatch("deleteTask", id);
+            store.dispatch("deleteTask", id); //delete task based on task ID
         },
     },
 });
