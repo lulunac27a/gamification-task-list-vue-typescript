@@ -223,8 +223,16 @@ export default createStore({
                 //10 years are approximately 3,652 days
                 dailyStreakMultiplier =
                     7.592 + 0.001 * (state.user.dailyStreak - 1461); //7.592x daily streak XP multiplier from 1,461 daily streaks (approximately 4 years) plus 0.001x streak multiplier for each daily streak
+            } else if (state.user.dailyStreak < 7305) {
+                //20 years are approximately 7,305 days
+                dailyStreakMultiplier =
+                    9.783 + 0.0005 * (state.user.dailyStreak - 3652); //9.783x daily streak XP multiplier from 3,652 daily streaks (approximately 10 years) plus 0.001x streak multiplier for each daily streak
+            } else if (state.user.dailyStreak < 18262) {
+                //50 years are approximately 18,262 days
+                dailyStreakMultiplier =
+                    11.6095 + 0.0003 * (state.user.dailyStreak - 7305); //11.6095x daily streak XP multiplier from 7,305 daily streaks (approximately 20 years) plus 0.001x streak multiplier for each daily streak
             } else {
-                dailyStreakMultiplier = 9.783; //9.783x daily streak XP multiplier from 3,652 daily streaks (approximately 10 years)
+                dailyStreakMultiplier = 14.8966; //14.8966x daily streak XP multiplier from 18,262 daily streaks (approximately 50 years)
             }
             const previousCompletionDate: string | undefined =
                 state.user.lastCompletionDate; //set the previous completion date to the user last task completion date
@@ -596,7 +604,7 @@ export default createStore({
             } else if (state.user.rating < 150000000) {
                 rankMultiplier = 56; //56 rank multiplier for rating from 125,000,000 to under 150,000,000
             } else if (state.user.rating < 175000000) {
-                rankMultiplier = 57; //57 rank multiplier for rating from 150,000,000 to under 17,500,000
+                rankMultiplier = 57; //57 rank multiplier for rating from 150,000,000 to under 175,000,000
             } else if (state.user.rating < 200000000) {
                 rankMultiplier = 58; //58 rank multiplier for rating from 175,000,000 to under 200,000,000
             } else if (state.user.rating < 225000000) {
@@ -668,8 +676,11 @@ export default createStore({
             } else if (state.user.daysCompleted < 7305) {
                 daysCompletedMultiplier =
                     5.758 + 0.0002 * (state.user.daysCompleted - 3652); //5.758x days completed multiplier from 3,652 days completed (approximately 10 years) plus 0.0002x for each day completed
+            } else if (state.user.daysCompleted < 18262) {
+                daysCompletedMultiplier =
+                    6.4886 + 0.0001 * (state.user.daysCompleted - 7305); //6.4886x days completed multiplier from 7,305 days completed (approximately 20 years) plus 0.0001x for each day completed
             } else {
-                daysCompletedMultiplier = 6.4886; //6.4886x days completed multiplier from 7,305 days completed
+                daysCompletedMultiplier = 7.5843; //7.5843x days completed multiplier from 18,262 days completed (approximately 50 years)
             }
             //calculate the amount of XP earned and points earned when the task is completed
             const rankXpEarned: number = Math.max(
@@ -739,13 +750,17 @@ export default createStore({
                 ),
                 1,
             ); //get at least 1 point when the task is completed
+            let alertTextPointsEarned = ""; //alert text for points earned
             state.user.score += pointsEarned; //get the amount of points earned based on task difficulty, task priority, task due date, task repetition, task streak, daily streak, user level, rank and days completed multipliers
             if (pointsEarned > state.user.bestScoreEarned) {
                 //if the points earned are greater than the best score earned
                 state.user.bestScoreEarned = pointsEarned; //set the best score earned to points earned when the task is completed
+                alertTextPointsEarned += `\nNew best amount of points earned: ${pointsEarned}`; //alert user for new best amount of points earned
+            } else {
+                alertTextPointsEarned += `\nBest amount of points earned: ${state.user.bestScoreEarned}`; //alert user for current best amount of points earned
             }
             alert(
-                `Task ${task.task} completed!\nYou earned ${xpEarned.toLocaleString("en-US")} XP!\nYou earned ${pointsEarned.toLocaleString("en-US")} point${pointsEarned === 1 ? "" : "s"}!`,
+                `Task ${task.task} completed!\nYou earned ${xpEarned.toLocaleString("en-US")} XP!\nYou earned ${pointsEarned.toLocaleString("en-US")} point${pointsEarned === 1 ? "" : "s"}!\n${alertTextPointsEarned}`,
             ); //alert the user to show how many XP they earned and points earned after completing the task
             //check if the user has leveled up
             const userLevel: number = state.user.level; //set the userLevel variable before calculating user level state
