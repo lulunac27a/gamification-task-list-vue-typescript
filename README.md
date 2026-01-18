@@ -1,8 +1,8 @@
 # Vue Gamification Task List App with Vuex, SCSS, and TypeScript
 
-This application is a task list with task repetition with level and experience points,
-and it stores to local storage using `vuex-persistedstate`.
-Try it on Netlify: https://gamification-task-list-vue-typescript.netlify.app/
+This application is a task list with task repetition with level and experience
+points, and it stores to local storage using `vuex-persistedstate`. Try it on
+Netlify: https://gamification-task-list-vue-typescript.netlify.app/
 
 ## Contents
 
