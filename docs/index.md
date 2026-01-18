@@ -20,6 +20,7 @@ Try it on Netlify: https://gamification-task-list-vue-typescript.netlify.app/
 
 ## Set up the application
 
+Clone the repository and install dependencies:
 ```
 git clone https://github.com/lulunac27a/gamification-task-list-vue-typescript.git
 npm install
