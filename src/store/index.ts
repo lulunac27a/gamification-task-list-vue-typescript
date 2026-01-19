@@ -722,6 +722,7 @@ export default createStore({
                     (Math.pow(task.rank + 1, 4) -
                         Math.pow(task.rank === 1 ? 0 : task.rank, 4))) *
                 100; //calculate the rank level progress and if level is 1 set rank level at the start of level 1 to 0 XP
+            const rankProgress = task.rank + task.rankProgress / 100; //get task rank progress
             const xpEarned: number = Math.max(
                 Math.floor(
                     task.difficulty *
@@ -731,7 +732,7 @@ export default createStore({
                         streakMultiplier *
                         dailyStreakMultiplier *
                         dayTasksMultiplier *
-                        (1 + task.rank / 10) *
+                        (1 + rankProgress / 10) *
                         (1 + rankMultiplier / 10) *
                         daysCompletedMultiplier,
                 ),
